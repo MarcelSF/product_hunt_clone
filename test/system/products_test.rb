@@ -10,7 +10,6 @@ class ProductsTest < ApplicationSystemTestCase
 
   test "lets a signed in user create a new product" do
     login_as users(:george)
-    10.times do
     visit "/products/new"
     # save_and_open_screenshot
 
@@ -20,10 +19,8 @@ class ProductsTest < ApplicationSystemTestCase
 
     click_on 'Create Product'
     # save_and_open_screenshot
-    end
     # Should be redirected to Home with new product
     assert_equal root_path, page.current_path
     assert_text "Change your life: Learn to code"
-    assert_selector ".card-product", count: Product.count
   end
 end
