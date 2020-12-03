@@ -2,6 +2,8 @@ language: ruby
 cache:
   bundler: true
   yarn: true
+  directories:
+    - node_modules
 services:
   - redis-server
 sudo: required
@@ -10,10 +12,15 @@ before_install:
 - sudo apt-get install google-chrome-stable
 addons:
   postgresql: '9.6'
+install:
+  - bundle install
+  - nvm install node
+  - node -v
+  - npm i -g yarn
+  - yarn install
 before_script:
   - psql -c 'create database product_hunt_clone_test;' -U postgres
 script:
-  - rm yarn.lock && yarn
   - bundle exec rake db:schema:load
   - bundle exec rake db:test:prepare
   - SECRET_KEY_BASE=a RAILS_ENV=production bundle exec rake assets:precompile
