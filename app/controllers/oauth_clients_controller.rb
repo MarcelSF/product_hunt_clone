@@ -4,7 +4,7 @@ class OauthClientsController < ApplicationController
   before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @client_applications = current_user.client_applications.build(user_params)
+    @client_applications = current_user.client_applications
     @tokens = current_user.tokens.find :all, :conditions => 'oauth_tokens.invalidated_at is null and oauth_tokens.authorized_at is not null'
   end
 
@@ -13,7 +13,7 @@ class OauthClientsController < ApplicationController
   end
 
   def create
-    @client_application = current_user.client_applications.build(params[:client_application])
+    @client_application = current_user.client_applications.build(user_params)
     if @client_application.save
       flash[:notice] = "Registered the information successfully"
       redirect_to :action => "show", :id => @client_application.id

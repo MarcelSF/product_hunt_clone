@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :oauth_clients
+
   match '/oauth/test_request', via: [:get], :to => 'oauth#test_request',  :as => :test_request
   match '/oauth/token',         via: [:post], :to => 'oauth#token',         :as => :token
   match '/oauth/access_token',  via: [:get], :to => 'oauth#access_token',  :as => :access_token
